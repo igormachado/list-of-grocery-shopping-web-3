@@ -1,8 +1,8 @@
-### React List of Grocery Shopping Web3 🧨🎯
+# React List of Grocery Shopping Web3 🧨🎯
 
 ## ICP Zero to Dapp Hackathon Powered by Encode 🔋🚀🚧
 
-# Newbie Bounty
+### Newbie Bounty
 
 
 🌏🏛 This project was created at the EnCode Club hackathon event that I took part. I created a simple project using ICP technologies to create a web3 on the blockchain. This project is a grocery shopping list. This project was created at the EnCode Club hackathon event which I participated in. I created a simple project using ICP technologies to create a web3 on the blockchain. This project is a shopping list. My first project using blockchain, so I decided to make it simple to learn and now I am confident about increasing my skills in web3 development.
