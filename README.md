@@ -94,50 +94,6 @@ const schema = z.object({
     setListItems([...listItems, { item, quantity, category }]);
     reset();
   };
-
-
-// submit form and prevent reload de page when create a list.
-function handlePreventDefault(e: React.FormEvent) {
-    e.preventDefault()
-  }
-
-  // This function create a item of the list
-  function handleInputItem(e: React.ChangeEvent<HTMLInputElement>) {
-    setAddItem(e.target.value)
-  }
-
-  // This function create how many quantity you want
-  // Exemplo 3 Steaks, 4 Wines
-  function handleInputQuantity(e: React.ChangeEvent<HTMLInputElement>) {
-    setAddQuantity(e.target.value)
-  }
-
-  // This function create a category item
-  // Exemplo: item: Steak, quantiy: 3,  category: meet
-  function handleInputCategory(e: React.ChangeEvent<HTMLSelectElement>) {
-    setAddCategory(e.target.value)
-  }
-
-  // This function create a list of grocery shopping.
-  function handleCreateItem() {
-    // It doesn't allow creating an empty item
-    if (addItem.length === 0 || addQuantity.length === 0 || addCategory.length === 0) {
-      return
-    }
-    // Create item
-    setListItems([
-      ...listItems,
-      {
-        item: addItem,
-        quantity: addQuantity,
-        category: addCategory,
-      },
-    ])
-    // clean all inputs
-    setAddItem('')
-    setAddCategory('')
-    setAddQuantity('')
-  }
 ```
 
 - ***Component List***
