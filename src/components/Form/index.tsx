@@ -4,89 +4,62 @@ import {
   InputItem,
   Quantity,
   SelectCategory,
-} from '@/styles/pages/Form'
+} from "@/styles/pages/Form";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 
-import { useContext, useState } from 'react'
-import { ListContext } from '../../context/prodcutsShop'
+import { useContext, useState } from "react";
+import { ListContext } from "../../context/prodcutsShop";
+import { SubmitHandler, useForm } from "react-hook-form";
 
+type ListItemProps = {
+  item: string;
+  quantity: string;
+  category: string;
+};
+
+const schema = z.object({
+  item: z.string().min(4, { message: "Required" }),
+  quantity: z.string().min(1, { message: "Required" }),
+  category: z.string().min(4, { message: "Required" }),
+});
 
 export default function Form() {
-  const [addItem, setAddItem] = useState('')
-  const [addQuantity, setAddQuantity] = useState('')
-  const [addCategory, setAddCategory] = useState('')
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ListItemProps>({ resolver: zodResolver(schema) });
 
-  const { listItems, setListItems } = useContext(ListContext)
+  const { listItems, setListItems } = useContext(ListContext);
 
-
-  function handlePreventDefault(e: React.FormEvent) {
-    e.preventDefault()
-  }
-
-  function handleInputItem(e: React.ChangeEvent<HTMLInputElement>) {
-    setAddItem(e.target.value)
-  }
-
-  function handleInputQuantity(e: React.ChangeEvent<HTMLInputElement>) {
-    setAddQuantity(e.target.value)
-  }
-
-  function handleInputCategory(e: React.ChangeEvent<HTMLSelectElement>) {
-    setAddCategory(e.target.value)
-  }
-
-  function handleCreateItem() {
-    if (addItem.length === 0 || addQuantity.length === 0 || addCategory.length === 0) {
-      return
-    }
-    setListItems([
-      ...listItems,
-      {
-        item: addItem,
-        quantity: addQuantity,
-        category: addCategory,
-      },
-    ])
-
-    setAddItem('')
-    setAddCategory('')
-    setAddQuantity('')
-  }
+  const onSubmit: SubmitHandler<ListItemProps> = ({
+    item,
+    quantity,
+    category,
+  }: ListItemProps) => {
+    setListItems([...listItems, { item, quantity, category }]);
+    reset();
+  };
 
   return (
     <>
-      <FormContainer onSubmit={handlePreventDefault}>
+      <FormContainer onSubmit={handleSubmit(onSubmit)}>
         <InputItem>
           <span>Item</span>
-          <input
-            type="text"
-            placeholder="Add Item"
-            value={addItem}
-            onChange={handleInputItem}
-            required
-
-          />
+          <input type="text" placeholder="Add Item" {...register("item")} />
+          {errors.item?.message && <p>{errors.item?.message}</p>}
         </InputItem>
         <Quantity>
           <span>Quantity</span>
-          <input
-            type="number"
-            value={addQuantity}
-            onChange={handleInputQuantity}
-            required
-
-          />
+          <input type="text" {...register("quantity")} />
+          {errors.quantity?.message && <p>{errors.quantity?.message}</p>}
         </Quantity>
         <SelectCategory>
           <label htmlFor="category">Category</label>
-          <select
-            name="category"
-            value={addCategory}
-            onChange={handleInputCategory}
-            defaultValue=""
-            required
-
-          >
+          <select defaultValue="" {...register("category")}>
             <option>Category option</option>
             <option value="Fruit">Fruit</option>
             <option value="Bakary">Bakary</option>
@@ -94,11 +67,12 @@ export default function Form() {
             <option value="Drink">Drink</option>
             <option value="Meet">Meet</option>
           </select>
+          {errors.category?.message && <p>{errors.category?.message}</p>}
         </SelectCategory>
-        <Button onClick={handleCreateItem}>
+        <Button>
           <span>+</span>
         </Button>
       </FormContainer>
     </>
-  )
+  );
 }

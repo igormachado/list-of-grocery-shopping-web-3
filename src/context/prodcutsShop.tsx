@@ -4,32 +4,32 @@ import {
   SetStateAction,
   createContext,
   useState,
-} from 'react'
+} from "react";
 
 interface ListItemProps {
-  item: string
-  quantity: string
-  category: string
+  item: string;
+  quantity: string;
+  category: string;
 }
 
 interface ListProductProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 interface ListContextShopProps {
-  listItems: ListItemProps[]
-  setListItems: Dispatch<SetStateAction<ListItemProps[]>>
+  listItems: ListItemProps[];
+  setListItems: Dispatch<SetStateAction<ListItemProps[]>>;
 }
 
-export const ListContext = createContext({} as ListContextShopProps)
+export const ListContext = createContext({} as ListContextShopProps);
 
 export function ListContextProvider({ children }: ListProductProps) {
-  const [listItems, setListItems] = useState<ListItemProps[]>([])
-  console.log(listItems.length)
+  const [listItems, setListItems] = useState<ListItemProps[]>([]);
+  console.log(listItems.length);
 
   return (
     <ListContext.Provider value={{ listItems, setListItems }}>
       {children}
     </ListContext.Provider>
-  )
+  );
 }
