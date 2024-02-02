@@ -61,6 +61,41 @@ export default function Home() {
   - src/components/Form.  
 
 ```js
+
+//create a schema to every item
+// all item is required. Do not create item empty
+const schema = z.object({
+  item: z.string().min(4, { message: "Required" }),
+  quantity: z.string().min(1, { message: "Required" }),
+  category: z.string().min(4, { message: "Required" }),
+});
+
+  // Create a useForm with 3 functions
+  // register this function get inputs from item/quantity/category
+  // handleSubmit this function submit form when all register is complety
+  // reset this function clean all inputs after submit form.
+  // formState show error when try to submit input empty.
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ListItemProps>({ resolver: zodResolver(schema) });
+
+  const { listItems, setListItems } = useContext(ListContext);
+
+
+  // this function create item after input.
+  const onSubmit: SubmitHandler<ListItemProps> = ({
+    item,
+    quantity,
+    category,
+  }: ListItemProps) => {
+    setListItems([...listItems, { item, quantity, category }]);
+    reset();
+  };
+
+
 // submit form and prevent reload de page when create a list.
 function handlePreventDefault(e: React.FormEvent) {
     e.preventDefault()
