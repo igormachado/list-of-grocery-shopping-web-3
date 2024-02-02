@@ -46,7 +46,7 @@ export default function Form() {
 
   return (
     <>
-      <FormContainer onSubmit={handleSubmit(onSubmit)}>
+      <FormContainer onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <InputItem>
           <span>Item</span>
           <input type="text" placeholder="Add Item" {...register("item")} />
